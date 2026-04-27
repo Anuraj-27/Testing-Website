@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tripadvisor - The world's largest travel platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#00af87;--green-dark:#007a5e;--green-light:#e8f8f4;
+  --text:#1a1a1a;--muted:#666;--border:#e0e0e0;--bg:#fff;
+  --shadow:0 2px 8px rgba(0,0,0,0.12);
+}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text);background:#fff}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.nav-left{display:flex;align-items:center;gap:24px}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green)}
+.logo-owl{font-size:1.6rem}
+.nav-links{display:flex;gap:4px}
+.nav-link{padding:6px 12px;border-radius:20px;font-size:0.88rem;font-weight:600;color:var(--text);cursor:pointer;transition:background 0.15s}
+.nav-link:hover{background:#f0f0f0}
+.nav-right{display:flex;align-items:center;gap:8px}
+.btn-signin{background:transparent;border:2px solid var(--text);border-radius:24px;padding:6px 18px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.15s}
+.btn-signin:hover{background:var(--text);color:#fff}
+.currency{font-size:0.85rem;color:var(--muted);cursor:pointer;padding:6px}
+
+/* HERO */
+.hero{background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.2)),url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/bb/7e/dd/caption.jpg?w=1400&h=800&s=1') center/cover no-repeat;min-height:440px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);color:#fff;margin-bottom:24px;text-shadow:0 2px 8px rgba(0,0,0,0.3)}
+
+/* SEARCH BOX */
+.search-wrap{background:#fff;border-radius:40px;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:8px;max-width:680px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
+.search-wrap input{flex:1;border:none;outline:none;font-size:1rem;font-family:'Source Sans 3',sans-serif;color:var(--text)}
+.search-wrap input::placeholder{color:#aaa}
+.btn-search{background:var(--green);color:#fff;border:none;border-radius:32px;padding:10px 24px;font-weight:700;font-size:0.95rem;cursor:pointer;transition:background 0.15s;white-space:nowrap}
+.btn-search:hover{background:var(--green-dark)}
+.search-icon{color:var(--muted);font-size:1.1rem}
+
+/* TABS */
+.tabs-bar{background:#fff;border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:0}
+.tab{padding:14px 24px;font-size:0.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.15s;display:flex;align-items:center;gap:6px}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* CONTAINER */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* CATEGORY TILES */
+.section{padding:36px 0}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.tile{border-radius:12px;overflow:hidden;cursor:pointer;transition:transform 0.2s;position:relative;aspect-ratio:1}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.tile img,.tile-bg{width:100%;height:100%;object-fit:cover;display:block}
+.tile-bg{background:var(--green);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.tile-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));color:#fff;padding:20px 10px 10px;font-weight:700;font-size:0.9rem}
+
+/* POPULAR DESTINATIONS */
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.dest-card{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;transition:transform 0.2s}
+.dest-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.dest-img{height:140px;object-fit:cover;width:100%}
+.dest-body{padding:10px 12px}
+.dest-name{font-weight:700;font-size:0.95rem;margin-bottom:2px}
+.dest-count{font-size:0.78rem;color:var(--muted)}
+
+/* FOOTER */
+footer{background:#f5f5f5;border-top:1px solid var(--border);padding:40px 0 20px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:32px}
+.footer-col h4{font-weight:700;font-size:0.85rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px}
+.footer-col a{display:block;font-size:0.82rem;color:var(--muted);margin-bottom:7px;transition:color 0.15s}
+.footer-col a:hover{color:var(--green)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:16px;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo">
+      <span class="logo-owl">🦉</span> Tripadvisor
+    </a>
+    <div class="nav-links">
+      <a href="hotels.html"      class="nav-link">Hotels</a>
+      <a href="restaurants.html" class="nav-link">Restaurants</a>
+      <a href="#"                class="nav-link">Things to Do</a>
+      <a href="cruises.html"     class="nav-link">Cruises</a>
+      <a href="#"                class="nav-link">Forums</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <span class="currency">INR</span>
+    <button class="btn-signin" onclick="alert('Sign In clicked!')">Sign in</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Where to next?</h1>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="globalSearch" placeholder="Places to go, things to do, hotels..."/>
+    <button class="btn-search" onclick="doGlobalSearch()">Search</button>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <div class="tab active">🏠 Discover</div>
+  <a href="hotels.html"      class="tab">🏨 Hotels</a>
+  <a href="restaurants.html" class="tab">🍽️ Restaurants</a>
+  <div class="tab">🎯 Things to Do</div>
+  <a href="cruises.html"     class="tab">🚢 Cruises</a>
+</div>
+
+<div class="container">
+  <!-- EXPLORE BY CATEGORY -->
+  <section class="section">
+    <h2 class="section-title">Explore by category</h2>
+    <div class="tiles">
+      <a href="hotels.html" class="tile">
+        <div class="tile-bg" style="background:#e8f4fd">🏨</div>
+        <div class="tile-label">Hotels</div>
+      </a>
+      <a href="restaurants.html" class="tile">
+        <div class="tile-bg" style="background:#fef3e8">🍽️</div>
+        <div class="tile-label">Restaurants</div>
+      </a>
+      <a href="cruises.html" class="tile">
+        <div class="tile-bg" style="background:#e8f8f4">🚢</div>
+        <div class="tile-label">Cruises</div>
+      </a>
+      <div class="tile">
+        <div class="tile-bg" style="background:#f4e8fd">🎭</div>
+        <div class="tile-label">Things to Do</div>
+      </div>
+      <div class="tile">
+        <div class="tile-bg" style="background:#fde8e8">✈️</div>
+        <div class="tile-label">Flights</div>
+      </div>
+      <div class="tile">
+        <div class="tile-bg" style="background:#e8edf8">🏖️</div>
+        <div class="tile-label">Vacation Rentals</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR DESTINATIONS -->
+  <section class="section">
+    <h2 class="section-title">Popular destinations</h2>
+    <div class="dest-grid">
+      <a href="hotels.html?city=Nairobi" class="dest-card">
+        <div style="height:140px;background:linear-gradient(135deg,#00af87,#005f47);display:flex;align-items:center;justify-content:center;font-size:3rem">🦁</div>
+        <div class="dest-body">
+          <div class="dest-name">Nairobi</div>
+          <div class="dest-count">1,240 hotels · 890 restaurants</div>
+        </div>
+      </a>
+      <a href="hotels.html?city=Mumbai" class="dest-card">
+        <div style="height:140px;background:linear-gradient(135deg,#ff6b35,#c0392b);display:flex;align-items:center;justify-content:center;font-size:3rem">🇮🇳</div>
+        <div class="dest-body">
+          <div class="dest-name">Mumbai</div>
+          <div class="dest-count">2,100 hotels · 3,200 restaurants</div>
+        </div>
+      </a>
+      <a href="hotels.html?city=Dubai" class="dest-card">
+        <div style="height:140px;background:linear-gradient(135deg,#f7c948,#e67e22);display:flex;align-items:center;justify-content:center;font-size:3rem">🇦🇪</div>
+        <div class="dest-body">
+          <div class="dest-name">Dubai</div>
+          <div class="dest-count">1,890 hotels · 2,100 restaurants</div>
+        </div>
+      </a>
+      <a href="hotels.html?city=London" class="dest-card">
+        <div style="height:140px;background:linear-gradient(135deg,#3498db,#1a237e);display:flex;align-items:center;justify-content:center;font-size:3rem">🇬🇧</div>
+        <div class="dest-body">
+          <div class="dest-name">London</div>
+          <div class="dest-count">4,300 hotels · 8,900 restaurants</div>
+        </div>
+      </a>
+      <a href="hotels.html?city=Paris" class="dest-card">
+        <div style="height:140px;background:linear-gradient(135deg,#e84393,#9b59b6);display:flex;align-items:center;justify-content:center;font-size:3rem">🗼</div>
+        <div class="dest-body">
+          <div class="dest-name">Paris</div>
+          <div class="dest-count">3,700 hotels · 7,200 restaurants</div>
+        </div>
+      </a>
+      <a href="hotels.html?city=Tokyo" class="dest-card">
+        <div style="height:140px;background:linear-gradient(135deg,#e74c3c,#c0392b);display:flex;align-items:center;justify-content:center;font-size:3rem">🗾</div>
+        <div class="dest-body">
+          <div class="dest-name">Tokyo</div>
+          <div class="dest-count">5,100 hotels · 9,400 restaurants</div>
+        </div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="hotels.html">Hotels</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="cruises.html">Cruises</a>
+        <a href="#">Things to Do</a>
+        <a href="#">Flights</a>
+      </div>
+      <div class="footer-col">
+        <h4>Business</h4>
+        <a href="#">List your property</a>
+        <a href="#">Business advantage</a>
+        <a href="#">Sponsored placements</a>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#">About Tripadvisor</a>
+        <a href="#">Press</a>
+        <a href="#">Investor relations</a>
+        <a href="#">Trust & safety</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="#">Help centre</a>
+        <a href="#">Contact us</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of use</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Tripadvisor LLC. All rights reserved.</span>
+      <span>This is a practice automation site — not the real Tripadvisor</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function doGlobalSearch() {
+  const q = document.getElementById('globalSearch').value.toLowerCase();
+  if (q.includes('hotel') || q.includes('nairobi') || q.includes('stay'))
+    window.location.href = 'hotels.html';
+  else if (q.includes('restaurant') || q.includes('food') || q.includes('eat'))
+    window.location.href = 'restaurants.html';
+  else if (q.includes('cruise') || q.includes('ship'))
+    window.location.href = 'cruises.html';
+  else if (q.trim())
+    window.location.href = 'hotels.html';
+}
+document.getElementById('globalSearch').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doGlobalSearch();
+});
+</script>
+</body>
+</html>

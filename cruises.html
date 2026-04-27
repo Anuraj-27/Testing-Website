@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cruises 2026 - Tripadvisor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#00af87;--green-dark:#007a5e;--green-light:#e8f8f4;--text:#1a1a1a;--muted:#666;--border:#e0e0e0;--bg:#f5f5f5}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text);background:var(--bg)}
+a{text-decoration:none;color:inherit}
+
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green);display:flex;align-items:center;gap:6px}
+.nav-links{display:flex;gap:4px;margin-left:16px}
+.nav-link{padding:6px 12px;border-radius:20px;font-size:0.88rem;font-weight:600;color:var(--muted);cursor:pointer}
+.nav-link:hover{background:#f0f0f0;color:var(--text)}
+.nav-link.active{color:var(--text)}
+.nav-left{display:flex;align-items:center}
+.btn-signin{background:transparent;border:2px solid var(--text);border-radius:24px;padding:6px 18px;font-weight:700;font-size:0.85rem;cursor:pointer}
+
+.hero{background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.3)),linear-gradient(135deg,#0a3d6b,#1a6b9a);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;color:#fff;margin-bottom:8px}
+.hero p{color:rgba(255,255,255,0.85);font-size:1rem;max-width:500px}
+
+.container{max-width:1100px;margin:0 auto;padding:28px 20px}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:20px}
+
+/* CRUISE LINE CARDS */
+.cruise-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.cruise-line-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all 0.2s}
+.cruise-line-card:hover,.cruise-line-card.selected{border-color:var(--green);box-shadow:0 4px 16px rgba(0,175,135,0.15)}
+.cruise-line-card.selected{background:var(--green-light)}
+.cl-icon{font-size:2.5rem;margin-bottom:10px}
+.cl-name{font-weight:700;font-size:1rem;margin-bottom:4px}
+.cl-meta{font-size:0.78rem;color:var(--muted);margin-bottom:8px}
+.cl-desc{font-size:0.8rem;color:var(--muted);line-height:1.5}
+.cl-badge{display:inline-block;background:var(--green-light);color:var(--green-dark);border-radius:4px;font-size:0.7rem;font-weight:700;padding:2px 8px;margin-top:6px}
+
+/* SHIPS */
+.ships-section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
+.ships-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:16px}
+.ship-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.2s}
+.ship-card:hover,.ship-card.selected{border-color:var(--green);background:var(--green-light)}
+.ship-name{font-weight:700;font-size:0.95rem;margin-bottom:8px}
+.ship-row{display:flex;justify-content:space-between;font-size:0.8rem;padding:3px 0;border-bottom:1px solid #f5f5f5}
+.ship-row:last-child{border:none}
+.ship-row .lbl{color:var(--muted)}
+.ship-row .val{font-weight:600}
+
+/* SHIP DETAIL */
+.ship-detail{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px;display:none}
+.ship-detail.show{display:block}
+.detail-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.detail-name{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:4px}
+.detail-line{font-size:0.85rem;color:var(--muted)}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.detail-card{background:#f9f9f9;border-radius:8px;padding:16px}
+.detail-card-title{font-weight:700;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:12px}
+.spec-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #efefef;font-size:0.88rem}
+.spec-row:last-child{border:none}
+.spec-label{color:var(--muted)}
+.spec-val{font-weight:600}
+.spec-val.green{color:var(--green)}
+.lang-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.lang-tag{background:var(--green-light);color:var(--green-dark);border-radius:20px;font-size:0.78rem;font-weight:600;padding:4px 12px}
+.back-btn{background:transparent;border:1.5px solid var(--border);border-radius:8px;padding:8px 16px;font-size:0.85rem;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;gap:6px;font-weight:600;transition:all 0.15s}
+.back-btn:hover{border-color:var(--green);color:var(--green)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo">🦉 Tripadvisor</a>
+    <div class="nav-links">
+      <a href="hotels.html"      class="nav-link">Hotels</a>
+      <a href="restaurants.html" class="nav-link">Restaurants</a>
+      <a href="#"                class="nav-link">Things to Do</a>
+      <a href="cruises.html"     class="nav-link active">Cruises</a>
+      <a href="#"                class="nav-link">Forums</a>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span style="font-size:0.85rem;color:var(--muted)">INR</span>
+    <button class="btn-signin">Sign in</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Find Your Perfect Cruise</h1>
+  <p>Search over 300,000+ cruises across 20+ cruise lines</p>
+</div>
+
+<div class="container">
+
+  <!-- STEP 1: CRUISE LINES -->
+  <div id="step1">
+    <div class="section-title">🚢 Select a Cruise Line</div>
+    <div class="cruise-grid" id="cruiseLineGrid"></div>
+  </div>
+
+  <!-- STEP 2: SHIPS -->
+  <div id="step2" style="display:none">
+    <button class="back-btn" onclick="goBack(1)">← Back to Cruise Lines</button>
+    <div class="ships-section">
+      <div class="section-title" id="shipsTitle">Ships</div>
+      <div class="ships-grid" id="shipsGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP 3: SHIP DETAIL -->
+  <div id="step3" style="display:none">
+    <button class="back-btn" onclick="goBack(2)">← Back to Ships</button>
+    <div class="ship-detail show" id="shipDetailPanel"></div>
+  </div>
+
+</div>
+
+<script>
+const cruiseData = [
+  {
+    id:'royal', name:'Royal Caribbean International', icon:'👑', ships:28,
+    desc:'World\'s largest cruise line known for innovative mega-ships.',
+    vessels:[
+      { id:'wonder', name:'Wonder of the Seas', passengers:6988, crew:2394, launched:2022,
+        tonnage:'236,857 GT', length:'362 m', decks:18, homeport:'Miami, FL',
+        languages:['English','Spanish','French','German','Portuguese','Mandarin','Japanese'] },
+      { id:'icon',   name:'Icon of the Seas',   passengers:7600, crew:2350, launched:2024,
+        tonnage:'250,800 GT', length:'365 m', decks:20, homeport:'Miami, FL',
+        languages:['English','Spanish','French','German','Portuguese'] },
+      { id:'oasis',  name:'Oasis of the Seas',  passengers:6296, crew:2165, launched:2009,
+        tonnage:'225,282 GT', length:'361 m', decks:16, homeport:'Port Canaveral, FL',
+        languages:['English','Spanish','French'] },
+    ]
+  },
+  {
+    id:'carnival', name:'Carnival Cruise Line', icon:'🎉', ships:24,
+    desc:'Fun-focused cruising with a party atmosphere.',
+    vessels:[
+      { id:'mardi',  name:'Mardi Gras',          passengers:6500, crew:2050, launched:2021,
+        tonnage:'180,800 GT', length:'344 m', decks:20, homeport:'Port Canaveral, FL',
+        languages:['English','Spanish','Haitian Creole','French'] },
+      { id:'jubilee',name:'Carnival Jubilee',    passengers:6631, crew:2100, launched:2023,
+        tonnage:'183,900 GT', length:'345 m', decks:20, homeport:'Galveston, TX',
+        languages:['English','Spanish'] },
+    ]
+  },
+  {
+    id:'msc', name:'MSC Cruises', icon:'🌍', ships:22,
+    desc:'European cruise style with multilingual international experience.',
+    vessels:[
+      { id:'worldeu',name:'MSC World Europa',    passengers:6762, crew:2138, launched:2022,
+        tonnage:'215,863 GT', length:'335 m', decks:20, homeport:'Doha, Qatar',
+        languages:['English','French','German','Italian','Spanish','Portuguese','Arabic','Chinese'] },
+      { id:'seashore',name:'MSC Seashore',       passengers:5632, crew:1648, launched:2021,
+        tonnage:'169,400 GT', length:'339 m', decks:20, homeport:'Miami, FL',
+        languages:['English','French','Italian','Spanish','German'] },
+    ]
+  },
+  {
+    id:'norwegian', name:'Norwegian Cruise Line', icon:'🇳🇴', ships:19,
+    desc:'Freestyle cruising with flexible dining and relaxed atmosphere.',
+    vessels:[
+      { id:'prima', name:'Norwegian Prima',      passengers:3099, crew:1506, launched:2022,
+        tonnage:'142,500 GT', length:'294 m', decks:17, homeport:'Galveston, TX',
+        languages:['English','Norwegian','German','Spanish','French'] },
+      { id:'viva',  name:'Norwegian Viva',        passengers:3099, crew:1506, launched:2023,
+        tonnage:'142,500 GT', length:'294 m', decks:17, homeport:'Rome, Italy',
+        languages:['English','Norwegian','German','Italian'] },
+    ]
+  },
+];
+
+let selectedLine = null;
+let selectedShip = null;
+
+// Render cruise lines
+document.getElementById('cruiseLineGrid').innerHTML = cruiseData.map(cl => `
+  <div class="cruise-line-card" id="cl-${cl.id}" data-line-id="${cl.id}" onclick="selectLine('${cl.id}')">
+    <div class="cl-icon">${cl.icon}</div>
+    <div class="cl-name">${cl.name}</div>
+    <div class="cl-meta">${cl.ships} ships in fleet</div>
+    <div class="cl-desc">${cl.desc}</div>
+    <span class="cl-badge">View Ships →</span>
+  </div>
+`).join('');
+
+function selectLine(id) {
+  selectedLine = cruiseData.find(c => c.id === id);
+  document.querySelectorAll('.cruise-line-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('cl-'+id).classList.add('selected');
+
+  // Build ships grid
+  document.getElementById('shipsTitle').textContent = selectedLine.icon + ' ' + selectedLine.name + ' — Fleet';
+  document.getElementById('shipsGrid').innerHTML = selectedLine.vessels.map(v => `
+    <div class="ship-card" id="ship-${v.id}" data-ship-id="${v.id}" onclick="selectShip('${v.id}')">
+      <div class="ship-name">🚢 ${v.name}</div>
+      <div class="ship-row"><span class="lbl">Passengers</span><span class="val">${v.passengers.toLocaleString()}</span></div>
+      <div class="ship-row"><span class="lbl">Crew</span><span class="val">${v.crew.toLocaleString()}</span></div>
+      <div class="ship-row"><span class="lbl">Launched</span><span class="val">${v.launched}</span></div>
+      <div class="ship-row"><span class="lbl">Languages</span><span class="val">${v.languages.length}</span></div>
+    </div>
+  `).join('');
+
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'block';
+  document.getElementById('step3').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function selectShip(id) {
+  selectedShip = selectedLine.vessels.find(v => v.id === id);
+  document.querySelectorAll('.ship-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('ship-'+id).classList.add('selected');
+
+  document.getElementById('shipDetailPanel').innerHTML = `
+    <div class="detail-header">
+      <div>
+        <div class="detail-name">🚢 ${selectedShip.name}</div>
+        <div class="detail-line">${selectedLine.icon} ${selectedLine.name}</div>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card" id="shipSpecs">
+        <div class="detail-card-title">Ship Specifications</div>
+        <div class="spec-row"><span class="spec-label">Passengers</span><span class="spec-val green" id="spec-passengers">${selectedShip.passengers.toLocaleString()}</span></div>
+        <div class="spec-row"><span class="spec-label">Crew</span><span class="spec-val green" id="spec-crew">${selectedShip.crew.toLocaleString()}</span></div>
+        <div class="spec-row"><span class="spec-label">Launched Year</span><span class="spec-val green" id="spec-launched">${selectedShip.launched}</span></div>
+        <div class="spec-row"><span class="spec-label">Gross Tonnage</span><span class="spec-val">${selectedShip.tonnage}</span></div>
+        <div class="spec-row"><span class="spec-label">Length</span><span class="spec-val">${selectedShip.length}</span></div>
+        <div class="spec-row"><span class="spec-label">Decks</span><span class="spec-val">${selectedShip.decks}</span></div>
+        <div class="spec-row"><span class="spec-label">Home Port</span><span class="spec-val">${selectedShip.homeport}</span></div>
+      </div>
+      <div class="detail-card" id="shipLanguages">
+        <div class="detail-card-title">Languages Offered — ${selectedShip.languages.length} total</div>
+        <div class="lang-tags" id="langList">
+          ${selectedShip.languages.map((l,i) => `<span class="lang-tag" id="lang-${i}" data-language="${l}">${l}</span>`).join('')}
+        </div>
+        <div style="margin-top:14px;font-size:0.78rem;color:var(--muted)">
+          As List: [${selectedShip.languages.map(l=>`"${l}"`).join(', ')}]
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goBack(step) {
+  document.getElementById('step1').style.display = step===1 ? 'block' : 'none';
+  document.getElementById('step2').style.display = step===2 ? 'block' : 'none';
+  document.getElementById('step3').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

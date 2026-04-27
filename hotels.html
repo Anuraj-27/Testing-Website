@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nairobi Hotels and Places to Stay - Tripadvisor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#00af87;--green-dark:#007a5e;--green-light:#e8f8f4;--text:#1a1a1a;--muted:#666;--border:#e0e0e0;--bg:#f5f5f5}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text);background:var(--bg)}
+a{text-decoration:none;color:inherit}
+
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green)}
+.nav-links{display:flex;gap:4px;margin-left:16px}
+.nav-link{padding:6px 12px;border-radius:20px;font-size:0.88rem;font-weight:600;color:var(--muted);cursor:pointer;transition:background 0.15s}
+.nav-link:hover{background:#f0f0f0;color:var(--text)}
+.nav-link.active{color:var(--text);border-bottom:2px solid var(--green)}
+.nav-left{display:flex;align-items:center}
+.btn-signin{background:transparent;border:2px solid var(--text);border-radius:24px;padding:6px 18px;font-weight:700;font-size:0.85rem;cursor:pointer}
+
+/* BREADCRUMB */
+.breadcrumb{background:#fff;padding:8px 24px;font-size:0.8rem;color:var(--muted);border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--muted)}
+.breadcrumb a:hover{color:var(--green);text-decoration:underline}
+.breadcrumb span{margin:0 6px}
+
+/* HERO SEARCH */
+.hero-search{position:relative;height:280px;background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.25)),url('') center/cover;background-color:#2c7a5a;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.hero-search h1{font-family:'Playfair Display',serif;font-size:2.2rem;color:#fff;margin-bottom:20px;text-shadow:0 2px 6px rgba(0,0,0,0.3)}
+
+/* SEARCH FORM */
+.search-form{background:#fff;border-radius:12px;padding:16px 20px;display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;max-width:900px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.sf-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
+.sf-label{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.sf-input{border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.9rem;font-family:'Source Sans 3',sans-serif;outline:none;transition:border-color 0.15s;background:#fff;color:var(--text)}
+.sf-input:focus{border-color:var(--green)}
+select.sf-input option{background:#fff}
+.btn-sf-search{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 28px;font-weight:700;font-size:0.95rem;cursor:pointer;transition:background 0.15s;height:42px;white-space:nowrap}
+.btn-sf-search:hover{background:var(--green-dark)}
+
+/* GUESTS MODAL */
+.guests-wrap{position:relative}
+.guests-btn{border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.9rem;background:#fff;cursor:pointer;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
+.guests-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;min-width:260px;box-shadow:0 8px 24px rgba(0,0,0,0.15);z-index:50}
+.guests-dropdown.open{display:block}
+.guest-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0}
+.guest-row:last-child{border-bottom:none}
+.guest-label{font-size:0.9rem;font-weight:600}
+.guest-controls{display:flex;align-items:center;gap:10px}
+.guest-btn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border);background:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-weight:700;color:var(--green)}
+.guest-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.guest-count{font-weight:700;min-width:20px;text-align:center;font-size:1rem}
+.guest-update-btn{width:100%;margin-top:12px;background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px;font-weight:700;font-size:0.9rem;cursor:pointer}
+
+/* LAYOUT */
+.page-layout{display:flex;gap:0;max-width:1200px;margin:0 auto;padding:20px 16px;align-items:flex-start}
+
+/* FILTERS SIDEBAR */
+.sidebar{width:260px;min-width:260px;background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;position:sticky;top:70px}
+.sidebar-title{padding:16px 20px;font-weight:700;font-size:1rem;border-bottom:1px solid var(--border)}
+.filter-section{padding:16px 20px;border-bottom:1px solid #f0f0f0}
+.filter-title{font-weight:700;font-size:0.85rem;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.filter-title span{font-size:0.7rem;color:var(--muted)}
+.filter-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;cursor:pointer}
+.filter-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--green);cursor:pointer}
+.filter-item label{font-size:0.85rem;cursor:pointer;flex:1}
+.filter-item .count{font-size:0.75rem;color:var(--muted)}
+
+/* SORT BAR */
+.sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:0 4px}
+.results-count{font-size:0.88rem;color:var(--muted)}
+.results-count strong{color:var(--text)}
+.sort-wrap{display:flex;align-items:center;gap:8px;font-size:0.88rem}
+.sort-label{color:var(--muted);font-weight:600}
+.sort-select{border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:0.85rem;font-family:'Source Sans 3',sans-serif;cursor:pointer;outline:none;background:#fff}
+.sort-select:focus{border-color:var(--green)}
+
+/* HOTEL CARDS */
+.results{flex:1;min-width:0}
+.hotel-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;margin-bottom:14px;transition:box-shadow 0.2s;cursor:pointer}
+.hotel-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.12)}
+.hotel-img{width:200px;min-width:200px;height:160px;object-fit:cover;background:linear-gradient(135deg,#00af87,#005f47);display:flex;align-items:center;justify-content:center;font-size:3rem}
+.hotel-body{padding:16px;flex:1;display:flex;justify-content:space-between}
+.hotel-info{flex:1}
+.hotel-name{font-weight:700;font-size:1.05rem;margin-bottom:4px;color:var(--text)}
+.hotel-name:hover{color:var(--green)}
+.hotel-location{font-size:0.8rem;color:var(--muted);margin-bottom:8px}
+.rating-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.rating-bubbles{display:flex;gap:2px}
+.bubble{width:14px;height:14px;border-radius:50%;background:var(--green)}
+.bubble.half{background:linear-gradient(90deg,var(--green) 50%,#ddd 50%)}
+.bubble.empty{background:#ddd}
+.rating-text{font-size:0.8rem;font-weight:600}
+.review-count{font-size:0.78rem;color:var(--muted)}
+.amenity-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.amenity-tag{font-size:0.72rem;background:#f5f5f5;border-radius:4px;padding:2px 8px;color:var(--muted)}
+.amenity-tag.highlight{background:var(--green-light);color:var(--green-dark);font-weight:600}
+.hotel-price{text-align:right;min-width:130px;display:flex;flex-direction:column;justify-content:space-between;padding:4px 0}
+.price-label{font-size:0.72rem;color:var(--muted)}
+.price-amount{font-size:1.4rem;font-weight:700;color:var(--text)}
+.price-total{font-size:0.78rem;color:var(--muted);margin-top:2px}
+.price-total strong{color:var(--text)}
+.btn-book{background:var(--green);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:background 0.15s;width:100%;margin-top:8px}
+.btn-book:hover{background:var(--green-dark)}
+
+.sponsored-badge{display:inline-block;font-size:0.68rem;background:#f0f0f0;color:var(--muted);border-radius:3px;padding:1px 5px;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo">🦉 Tripadvisor</a>
+    <div class="nav-links">
+      <a href="hotels.html"      class="nav-link active">Hotels</a>
+      <a href="restaurants.html" class="nav-link">Restaurants</a>
+      <a href="#"                class="nav-link">Things to Do</a>
+      <a href="cruises.html"     class="nav-link">Cruises</a>
+      <a href="#"                class="nav-link">Forums</a>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span style="font-size:0.85rem;color:var(--muted);cursor:pointer">INR</span>
+    <button class="btn-signin">Sign in</button>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="#">Africa</a><span>›</span>
+  <a href="#">Kenya</a><span>›</span>
+  <a href="#">Nairobi</a><span>›</span>
+  Nairobi Hotels
+  <span style="float:right;font-weight:700">THE 10 BEST Hotels in Nairobi, Kenya</span>
+</div>
+
+<!-- HERO SEARCH -->
+<div class="hero-search">
+  <h1>Nairobi Hotels and Places to Stay</h1>
+  <div class="search-form" id="searchForm">
+    <div class="sf-group" style="min-width:120px">
+      <div class="sf-label">Check In</div>
+      <input type="date" id="checkin" class="sf-input"/>
+    </div>
+    <div class="sf-group" style="min-width:120px">
+      <div class="sf-label">Check Out</div>
+      <input type="date" id="checkout" class="sf-input"/>
+    </div>
+    <div class="sf-group guests-wrap" style="min-width:160px">
+      <div class="sf-label">Rooms/Guests</div>
+      <button class="guests-btn" id="guestsBtn" onclick="toggleGuests()">
+        <span id="guestsSummary">1 Room, 2 Guests</span>
+        <span>▾</span>
+      </button>
+      <div class="guests-dropdown" id="guestsDropdown">
+        <div class="guest-row">
+          <div class="guest-label">Rooms</div>
+          <div class="guest-controls">
+            <button class="guest-btn" onclick="changeGuest('rooms',-1)">−</button>
+            <span class="guest-count" id="roomsCount">1</span>
+            <button class="guest-btn" onclick="changeGuest('rooms',1)">+</button>
+          </div>
+        </div>
+        <div class="guest-row">
+          <div class="guest-label">Adults</div>
+          <div class="guest-controls">
+            <button class="guest-btn" id="adultsMinusBtn" aria-label="Set adult count to one less" onclick="changeGuest('adults',-1)">−</button>
+            <span class="guest-count" id="adultsCount">2</span>
+            <button class="guest-btn" id="adultsPlusBtn"  aria-label="Set adult count to one more" onclick="changeGuest('adults',1)">+</button>
+          </div>
+        </div>
+        <div class="guest-row">
+          <div class="guest-label">Children</div>
+          <div class="guest-controls">
+            <button class="guest-btn" onclick="changeGuest('children',-1)">−</button>
+            <span class="guest-count" id="childrenCount">0</span>
+            <button class="guest-btn" onclick="changeGuest('children',1)">+</button>
+          </div>
+        </div>
+        <button class="guest-update-btn" id="guestsUpdateBtn" data-automation="guestsUpdateBtn" onclick="updateGuests()">Update</button>
+      </div>
+    </div>
+    <button class="btn-sf-search" id="searchBtn" onclick="doSearch()">Search</button>
+  </div>
+</div>
+
+<!-- PAGE LAYOUT -->
+<div class="page-layout">
+
+  <!-- SIDEBAR FILTERS -->
+  <div class="sidebar">
+    <div class="sidebar-title">Filters</div>
+
+    <div class="filter-section">
+      <div class="filter-title">Popular filters <span>▾</span></div>
+      <div class="filter-item">
+        <input type="checkbox" id="freeCancel"/>
+        <label for="freeCancel">Free cancellation</label>
+        <span class="count">(42)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="breakfastIncl"/>
+        <label for="breakfastIncl">Breakfast included</label>
+        <span class="count">(28)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="boutique"/>
+        <label for="boutique">Boutique hotels</label>
+        <span class="count">(15)</span>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Amenities <span>▾</span></div>
+      <div class="filter-item">
+        <input type="checkbox" id="filterPool" onchange="applyFilters()"/>
+        <label for="filterPool">🏊 Pool</label>
+        <span class="count">(31)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="filterElevator" onchange="applyFilters()"/>
+        <label for="filterElevator">🛗 Elevator / Lift</label>
+        <span class="count">(38)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="filterWifi" onchange="applyFilters()"/>
+        <label for="filterWifi">📶 Free WiFi</label>
+        <span class="count">(56)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="filterGym" onchange="applyFilters()"/>
+        <label for="filterGym">💪 Fitness Centre</label>
+        <span class="count">(22)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="filterSpa" onchange="applyFilters()"/>
+        <label for="filterSpa">💆 Spa</label>
+        <span class="count">(18)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="filterParking" onchange="applyFilters()"/>
+        <label for="filterParking">🅿️ Parking</label>
+        <span class="count">(44)</span>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Property type <span>▾</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Hotels</label><span class="count">(62)</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Resorts</label><span class="count">(12)</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Bed and Breakfast</label><span class="count">(24)</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Apartments</label><span class="count">(18)</span></div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Traveller rating <span>▾</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Wonderful 4.5+</label><span class="count">(14)</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Very good 4.0+</label><span class="count">(38)</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>Good 3.5+</label><span class="count">(52)</span></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" style="padding-left:20px">
+    <div class="sort-bar">
+      <div class="results-count">Showing <strong id="resultCount">8</strong> hotels in <strong>Nairobi, Kenya</strong></div>
+      <div class="sort-wrap">
+        <span class="sort-label">Sort:</span>
+        <select class="sort-select" id="sortSelect" onchange="sortResults()">
+          <option value="recommended">Best Value</option>
+          <option value="rating">Traveler Rating</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="name">Name A-Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="hotelList"></div>
+  </div>
+</div>
+
+<script>
+const hotels = [
+  {id:1, name:"Hemingways Nairobi",      location:"Karen, Nairobi",      rating:4.9, reviews:1842, price:28500, amenities:["elevator","pool","wifi","spa","parking","gym"],     emoji:"🏰"},
+  {id:2, name:"The Tribe Hotel",          location:"Westlands, Nairobi",  rating:4.8, reviews:2134, price:18900, amenities:["elevator","wifi","pool","gym"],                    emoji:"🌿"},
+  {id:3, name:"Radisson Blu Hotel Nairobi",location:"Upper Hill, Nairobi",rating:4.7, reviews:3201, price:15600, amenities:["elevator","wifi","pool","gym","parking"],          emoji:"🏢"},
+  {id:4, name:"Villa Rosa Kempinski",     location:"Westlands, Nairobi",  rating:4.7, reviews:2876, price:22000, amenities:["elevator","pool","wifi","spa","gym"],               emoji:"🌹"},
+  {id:5, name:"Nairobi Serena Hotel",     location:"City Centre, Nairobi",rating:4.6, reviews:4102, price:14200, amenities:["elevator","wifi","pool","gym","parking"],          emoji:"🦁"},
+  {id:6, name:"Crowne Plaza NBI Airport", location:"Embakasi, Nairobi",   rating:4.5, reviews:1654, price:11800, amenities:["elevator","wifi","parking","gym"],                 emoji:"✈️"},
+  {id:7, name:"House of Waine",           location:"Karen, Nairobi",      rating:4.5, reviews:890,  price:19500, amenities:["pool","wifi","spa","parking"],                     emoji:"🌺"},
+  {id:8, name:"Sarova Stanley",           location:"City Centre, Nairobi",rating:4.4, reviews:3450, price:12500, amenities:["elevator","wifi","gym","parking"],                 emoji:"⭐"},
+];
+
+let guests = {rooms:1, adults:2, children:0};
+let nights = 5;
+let activeFilters = new Set();
+let currentSort = "recommended";
+let data = [...hotels];
+
+// Set default dates
+window.onload = () => {
+  const t = new Date();
+  const ci = new Date(t); ci.setDate(ci.getDate()+1);
+  const co = new Date(t); co.setDate(co.getDate()+6);
+  document.getElementById('checkin').value  = ci.toISOString().split('T')[0];
+  document.getElementById('checkout').value = co.toISOString().split('T')[0];
+  renderHotels();
+};
+
+function toggleGuests() {
+  document.getElementById('guestsDropdown').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.guests-wrap')) {
+    document.getElementById('guestsDropdown').classList.remove('open');
+  }
+});
+
+function changeGuest(type, delta) {
+  if (type==='rooms')   guests.rooms    = Math.max(1, guests.rooms + delta);
+  if (type==='adults')  guests.adults   = Math.max(1, guests.adults + delta);
+  if (type==='children')guests.children = Math.max(0, guests.children + delta);
+  document.getElementById('roomsCount').textContent    = guests.rooms;
+  document.getElementById('adultsCount').textContent   = guests.adults;
+  document.getElementById('childrenCount').textContent = guests.children;
+  // Update aria-label for Selenium
+  const total = guests.adults + guests.children;
+  document.getElementById('guestsBtn').setAttribute('aria-label',
+    `Enter the number of rooms and then enter the number of guests. The selected number of rooms is ${guests.rooms} and the selected number of guests is ${total}.`);
+  document.getElementById('guestsBtn').setAttribute('aria-label',
+    `Enter the number of rooms and then enter the number of guests. The selected number of rooms is ${guests.rooms} and the selected number of guests is ${total}.`);
+}
+
+function updateGuests() {
+  const total = guests.adults + guests.children;
+  document.getElementById('guestsSummary').textContent =
+    `${guests.rooms} Room${guests.rooms>1?'s':''}, ${total} Guest${total>1?'s':''}`;
+  document.getElementById('guestsDropdown').classList.remove('open');
+}
+
+function doSearch() {
+  const ci = new Date(document.getElementById('checkin').value);
+  const co = new Date(document.getElementById('checkout').value);
+  if (co > ci) {
+    nights = Math.round((co-ci)/(1000*60*60*24));
+  }
+  renderHotels();
+}
+
+function applyFilters() {
+  activeFilters.clear();
+  ['Pool','Elevator','Wifi','Gym','Spa','Parking'].forEach(f => {
+    if (document.getElementById('filter'+f)?.checked) activeFilters.add(f.toLowerCase());
+  });
+  renderHotels();
+}
+
+function sortResults() {
+  currentSort = document.getElementById('sortSelect').value;
+  renderHotels();
+}
+
+function renderHotels() {
+  let d = [...hotels];
+  // Filter
+  if (activeFilters.size > 0) {
+    d = d.filter(h => [...activeFilters].every(f => h.amenities.includes(f)));
+  }
+  // Sort
+  if (currentSort==='rating')     d.sort((a,b)=>b.rating-a.rating);
+  if (currentSort==='price_asc')  d.sort((a,b)=>a.price-b.price);
+  if (currentSort==='price_desc') d.sort((a,b)=>b.price-a.price);
+  if (currentSort==='name')       d.sort((a,b)=>a.name.localeCompare(b.name));
+
+  document.getElementById('resultCount').textContent = d.length;
+
+  document.getElementById('hotelList').innerHTML = d.length === 0
+    ? '<div style="text-align:center;padding:40px;color:var(--muted)">No hotels match the selected filters.</div>'
+    : d.map(h => {
+        const full  = Math.floor(h.rating);
+        const hasHalf = (h.rating % 1) >= 0.5;
+        const empty = 5 - full - (hasHalf?1:0);
+        const bubbles =
+          '●'.repeat(full).split('').map(()=>`<span class="bubble"></span>`).join('') +
+          (hasHalf?`<span class="bubble half"></span>`:'') +
+          '○'.repeat(empty).split('').map(()=>`<span class="bubble empty"></span>`).join('');
+
+        const totalCost = (h.price * nights).toLocaleString('en-IN');
+        const amenityLabels = {
+          elevator:'🛗 Elevator',pool:'🏊 Pool',wifi:'📶 WiFi',
+          spa:'💆 Spa',gym:'💪 Gym',parking:'🅿️ Parking'
+        };
+
+        return `
+        <div class="hotel-card" id="hotel-${h.id}" data-automation="hotel-card" data-hotel-id="${h.id}">
+          <div class="hotel-img">${h.emoji}</div>
+          <div class="hotel-body">
+            <div class="hotel-info">
+              <div class="hotel-name" data-automation="hotel-card-title">${h.name}</div>
+              <div class="hotel-location">📍 ${h.location}</div>
+              <div class="rating-row">
+                <div class="rating-bubbles">${bubbles}</div>
+                <span class="rating-text">${h.rating}</span>
+                <span class="review-count">(${h.reviews.toLocaleString()} reviews)</span>
+              </div>
+              <div class="amenity-tags">
+                ${h.amenities.map(a=>`<span class="amenity-tag ${a==='elevator'?'highlight':''}">${amenityLabels[a]||a}</span>`).join('')}
+              </div>
+            </div>
+            <div class="hotel-price">
+              <div>
+                <div class="price-label">per night</div>
+                <div class="price-amount" data-automation="metaRegularPrice">₹${h.price.toLocaleString('en-IN')}</div>
+                <div class="price-total">Total: <strong>₹${totalCost}</strong> (${nights} nights)</div>
+              </div>
+              <button class="btn-book" onclick="alert('Booking ${h.name}!')">View Deal</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Best Restaurants in Nairobi, Kenya 2026 - Tripadvisor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#00af87;--green-dark:#007a5e;--green-light:#e8f8f4;--text:#1a1a1a;--muted:#666;--border:#e0e0e0;--bg:#f5f5f5}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text);background:var(--bg)}
+a{text-decoration:none;color:inherit}
+
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green);display:flex;align-items:center;gap:6px}
+.nav-links{display:flex;gap:4px;margin-left:16px}
+.nav-link{padding:6px 12px;border-radius:20px;font-size:0.88rem;font-weight:600;color:var(--muted);cursor:pointer;transition:background 0.15s}
+.nav-link:hover{background:#f0f0f0;color:var(--text)}
+.nav-link.active{color:var(--text)}
+.nav-left{display:flex;align-items:center}
+.btn-signin{background:transparent;border:2px solid var(--text);border-radius:24px;padding:6px 18px;font-weight:700;font-size:0.85rem;cursor:pointer}
+
+/* SUBNAV */
+.city-nav{background:#fff;border-bottom:2px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:0}
+.city-tab{padding:12px 18px;font-size:0.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;display:flex;align-items:center;gap:6px;transition:color 0.15s}
+.city-tab:hover{color:var(--text)}
+.city-tab.active{color:var(--text);border-bottom-color:var(--green)}
+
+.breadcrumb{background:#fff;padding:8px 24px;font-size:0.8rem;color:var(--muted);border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--muted)}.breadcrumb a:hover{color:var(--green);text-decoration:underline}
+.breadcrumb span{margin:0 6px}
+
+/* PAGE HEADER */
+.page-header{background:#fff;padding:20px 24px;border-bottom:1px solid var(--border)}
+.page-header h1{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:4px}
+.page-header .subtitle{font-size:0.88rem;color:var(--muted)}
+
+/* LAYOUT */
+.page-layout{display:flex;max-width:1200px;margin:0 auto;padding:20px 16px;gap:0;align-items:flex-start}
+
+/* SIDEBAR */
+.sidebar{width:260px;min-width:260px;background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;position:sticky;top:70px}
+.sidebar-title{padding:14px 20px;font-weight:700;font-size:0.95rem;border-bottom:1px solid var(--border)}
+.filter-section{padding:14px 20px;border-bottom:1px solid #f0f0f0}
+.filter-title{font-weight:700;font-size:0.85rem;margin-bottom:10px;display:flex;justify-content:space-between;cursor:pointer}
+.filter-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;cursor:pointer}
+.filter-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--green);cursor:pointer}
+.filter-item label{font-size:0.85rem;cursor:pointer;flex:1}
+.filter-item .count{font-size:0.75rem;color:var(--muted)}
+
+/* SORT + RESULTS COUNT */
+.sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.results-count{font-size:0.88rem;color:var(--muted)}
+.results-count strong{color:var(--text)}
+.sort-wrap{display:flex;align-items:center;gap:6px;font-size:0.85rem;color:var(--muted)}
+.sort-select{border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:0.85rem;font-family:'Source Sans 3',sans-serif;cursor:pointer;outline:none;background:#fff}
+
+/* RESTAURANT CARDS */
+.results{flex:1;padding-left:20px}
+.rest-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;margin-bottom:14px;transition:box-shadow 0.2s;cursor:pointer;position:relative}
+.rest-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.12)}
+.rest-img{width:200px;min-width:200px;height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:linear-gradient(135deg,#ff6b35,#e74c3c)}
+.rest-body{padding:16px;flex:1;display:flex;justify-content:space-between;align-items:flex-start}
+.rest-info{flex:1}
+.rest-rank{font-size:0.88rem;color:var(--muted);margin-bottom:4px}
+.rest-name{font-weight:700;font-size:1.05rem;margin-bottom:4px}
+.rating-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.bubble{width:13px;height:13px;border-radius:50%;background:var(--green);display:inline-block}
+.bubble.empty{background:#ddd}
+.rating-text{font-size:0.8rem;font-weight:600}
+.review-count{font-size:0.78rem;color:var(--muted)}
+.rest-meta{font-size:0.8rem;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.rest-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--muted);display:inline-block}
+.open-now{color:#00af87;font-weight:600;font-size:0.8rem}
+.open-soon{color:#e67e22;font-weight:600;font-size:0.8rem}
+.review-snippets{font-size:0.8rem;color:var(--muted);font-style:italic;line-height:1.5}
+.sponsored-badge{display:inline-block;font-size:0.68rem;background:#f0f0f0;border-radius:3px;padding:1px 6px;color:var(--muted);margin-bottom:4px}
+.rest-price-col{text-align:right;min-width:80px}
+.price-range{font-size:0.9rem;color:var(--muted);font-weight:600}
+.cuisine-tag{display:inline-block;font-size:0.75rem;background:var(--green-light);color:var(--green-dark);border-radius:4px;padding:2px 8px;margin-right:4px;margin-top:4px;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo">🦉 Tripadvisor</a>
+    <div class="nav-links">
+      <a href="hotels.html"      class="nav-link">Hotels</a>
+      <a href="restaurants.html" class="nav-link active">Restaurants</a>
+      <a href="#"                class="nav-link">Things to Do</a>
+      <a href="cruises.html"     class="nav-link">Cruises</a>
+      <a href="#"                class="nav-link">Forums</a>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span style="font-size:0.85rem;color:var(--muted);cursor:pointer">INR</span>
+    <button class="btn-signin">Sign in</button>
+  </div>
+</nav>
+
+<!-- CITY SUB-NAV -->
+<div class="city-nav">
+  <div class="city-tab">🗺️ Nairobi</div>
+  <a href="hotels.html"      class="city-tab">🏨 Hotels</a>
+  <div class="city-tab">🎯 Things to Do</div>
+  <a href="restaurants.html" class="city-tab active">🍽️ Restaurants</a>
+  <div class="city-tab">💬 Forums</div>
+</div>
+
+<div class="breadcrumb">
+  <a href="#">Africa</a><span>›</span>
+  <a href="#">Kenya</a><span>›</span>
+  <a href="#">Nairobi</a><span>›</span>
+  Nairobi Restaurants
+  <span style="float:right;font-weight:700">Best Restaurants in Nairobi, Kenya - 2026</span>
+</div>
+
+<div class="page-header">
+  <h1>Restaurants in Nairobi</h1>
+  <div class="subtitle">Top restaurants in Nairobi &nbsp;ⓘ</div>
+</div>
+
+<div class="page-layout">
+
+  <!-- SIDEBAR FILTERS -->
+  <div class="sidebar">
+    <div class="sidebar-title">Filters</div>
+
+    <!-- Establishment type -->
+    <div class="filter-section">
+      <div class="filter-title">Establishment type <span>∧</span></div>
+      <div class="filter-item">
+        <input type="checkbox" id="estRestaurants" checked onchange="applyFilters()"/>
+        <label for="estRestaurants">Restaurants</label>
+        <span class="count">(1,057)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="estCoffee" onchange="applyFilters()"/>
+        <label for="estCoffee">Coffee &amp; Tea</label>
+        <span class="count">(234)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="estBars" onchange="applyFilters()"/>
+        <label for="estBars">Bars &amp; Pubs</label>
+        <span class="count">(156)</span>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="estQuick" onchange="applyFilters()"/>
+        <label for="estQuick">Quick Bites</label>
+        <span class="count">(312)</span>
+      </div>
+      <div style="font-size:0.82rem;color:var(--green);cursor:pointer;margin-top:4px;font-weight:600">Show more ▾</div>
+    </div>
+
+    <!-- Meal type -->
+    <div class="filter-section">
+      <div class="filter-title">Meal type <span>∧</span></div>
+      <div class="filter-item">
+        <input type="checkbox" id="mealBreakfast" onchange="applyFilters()"/>
+        <label for="mealBreakfast">Breakfast</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="mealBrunch" onchange="applyFilters()"/>
+        <label for="mealBrunch">Brunch</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="mealLunch" onchange="applyFilters()"/>
+        <label for="mealLunch">Lunch</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="mealDinner" onchange="applyFilters()"/>
+        <label for="mealDinner">Dinner</label>
+      </div>
+    </div>
+
+    <!-- Cuisines -->
+    <div class="filter-section">
+      <div class="filter-title">Cuisines <span>∧</span></div>
+      <div class="filter-item">
+        <input type="checkbox" id="cuisineAfrican" onchange="applyFilters()"/>
+        <label for="cuisineAfrican">African</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="cuisineAsian" onchange="applyFilters()"/>
+        <label for="cuisineAsian">Asian</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="cuisineBar" onchange="applyFilters()"/>
+        <label for="cuisineBar">Bar</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="cuisineEuropean" onchange="applyFilters()"/>
+        <label for="cuisineEuropean">European</label>
+      </div>
+      <div style="font-size:0.82rem;color:var(--green);cursor:pointer;margin-top:4px;font-weight:600">Show all</div>
+    </div>
+
+    <!-- Dishes -->
+    <div class="filter-section">
+      <div class="filter-title">Dishes <span>∧</span></div>
+      <div class="filter-item">
+        <input type="checkbox" id="dishFish" onchange="applyFilters()"/>
+        <label for="dishFish">Fish</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="dishChicken" onchange="applyFilters()"/>
+        <label for="dishChicken">Chicken dishes</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="dishBurger" onchange="applyFilters()"/>
+        <label for="dishBurger">Burger</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="dishBeef" onchange="applyFilters()"/>
+        <label for="dishBeef">Beef</label>
+      </div>
+    </div>
+
+    <!-- Price range -->
+    <div class="filter-section">
+      <div class="filter-title">Price range <span>∧</span></div>
+      <div class="filter-item"><input type="checkbox"/><label>₹ (Budget)</label></div>
+      <div class="filter-item"><input type="checkbox"/><label>₹₹ (Mid-range)</label></div>
+      <div class="filter-item"><input type="checkbox"/><label>₹₹₹ (Fine dining)</label></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results">
+    <div class="sort-bar">
+      <div class="results-count"><strong id="resultCount">10</strong> results</div>
+      <div class="sort-wrap">
+        Sort: <select class="sort-select" id="sortSelect" onchange="renderRestaurants()">
+          <option value="featured">Featured</option>
+          <option value="rating">Highest Rated</option>
+          <option value="reviews">Most Reviewed</option>
+        </select>
+      </div>
+    </div>
+    <div id="restaurantList"></div>
+  </div>
+</div>
+
+<script>
+const restaurants = [
+  {id:1,  name:"Royal 58 Restaurant",      cuisine:["International"],      meals:["breakfast","lunch","dinner"],dishes:["chicken","beef"],    rating:4.8, reviews:172,  price:"₹₹₹₹", open:"Open now",  emoji:"👑", sponsored:true},
+  {id:2,  name:"The Carnivore Restaurant", cuisine:["african","steakhouse"],meals:["lunch","dinner"],           dishes:["beef","fish","chicken"],rating:4.2,reviews:6527,price:"₹₹-₹₹₹",open:"Opens in 28 min",emoji:"🥩",sponsored:false},
+  {id:3,  name:"Habesha",                  cuisine:["african","ethiopian"], meals:["lunch","dinner"],           dishes:["fish","chicken"],      rating:4.2, reviews:453,  price:"₹₹-₹₹₹",open:"Open now",  emoji:"🇪🇹", sponsored:false},
+  {id:4,  name:"Lord Delamere Terrace",    cuisine:["african","international"],meals:["breakfast","lunch","dinner"],dishes:["fish","beef","chicken"],rating:4.3,reviews:140,price:"₹₹-₹₹₹",open:"Opens in 28 min",emoji:"🌿",sponsored:false},
+  {id:5,  name:"Talisman Restaurant",      cuisine:["international","european"],meals:["lunch","dinner"],       dishes:["fish","chicken"],      rating:4.6, reviews:1820, price:"₹₹₹", open:"Open now",  emoji:"🌟", sponsored:false},
+  {id:6,  name:"Kikwetu Restaurant",       cuisine:["african","kenyan"],    meals:["lunch","dinner"],           dishes:["fish","chicken","beef"],rating:4.4,reviews:520,  price:"₹₹",   open:"Open now",  emoji:"🦒", sponsored:false},
+  {id:7,  name:"Nyama Mama",              cuisine:["african","kenyan"],    meals:["lunch","dinner","brunch"],   dishes:["beef","chicken","fish"],rating:4.3,reviews:2100, price:"₹₹",   open:"Open now",  emoji:"🍖", sponsored:false},
+  {id:8,  name:"Mediterraneo Restaurant", cuisine:["european","italian"],  meals:["lunch","dinner"],           dishes:["fish","beef"],          rating:4.5, reviews:890,  price:"₹₹₹", open:"Open now",  emoji:"🇮🇹", sponsored:false},
+  {id:9,  name:"Sno-Cream Restaurant",    cuisine:["african","kenyan"],    meals:["breakfast","lunch"],        dishes:["chicken","fish"],       rating:4.1, reviews:340,  price:"₹",    open:"Open now",  emoji:"🍦", sponsored:false},
+  {id:10, name:"Java House Westlands",    cuisine:["international"],       meals:["breakfast","lunch","brunch"],dishes:["chicken","burger"],    rating:4.0, reviews:1230, price:"₹₹",   open:"Open now",  emoji:"☕", sponsored:false},
+];
+
+function applyFilters() { renderRestaurants(); }
+
+function renderRestaurants() {
+  const lunchOn    = document.getElementById('mealLunch')?.checked;
+  const breakfastOn= document.getElementById('mealBreakfast')?.checked;
+  const brunchOn   = document.getElementById('mealBrunch')?.checked;
+  const dinnerOn   = document.getElementById('mealDinner')?.checked;
+  const africanOn  = document.getElementById('cuisineAfrican')?.checked;
+  const asianOn    = document.getElementById('cuisineAsian')?.checked;
+  const europeanOn = document.getElementById('cuisineEuropean')?.checked;
+  const fishOn     = document.getElementById('dishFish')?.checked;
+  const chickenOn  = document.getElementById('dishChicken')?.checked;
+  const burgerOn   = document.getElementById('dishBurger')?.checked;
+  const beefOn     = document.getElementById('dishBeef')?.checked;
+
+  let d = [...restaurants];
+
+  // Meal type filter
+  const mealFilters = [];
+  if(lunchOn)     mealFilters.push('lunch');
+  if(breakfastOn) mealFilters.push('breakfast');
+  if(brunchOn)    mealFilters.push('brunch');
+  if(dinnerOn)    mealFilters.push('dinner');
+  if(mealFilters.length > 0)
+    d = d.filter(r => mealFilters.some(m => r.meals.includes(m)));
+
+  // Cuisine filter
+  const cuisineFilters = [];
+  if(africanOn)  cuisineFilters.push('african');
+  if(asianOn)    cuisineFilters.push('asian');
+  if(europeanOn) cuisineFilters.push('european');
+  if(cuisineFilters.length > 0)
+    d = d.filter(r => cuisineFilters.some(c => r.cuisine.includes(c)));
+
+  // Dish filter
+  const dishFilters = [];
+  if(fishOn)    dishFilters.push('fish');
+  if(chickenOn) dishFilters.push('chicken');
+  if(burgerOn)  dishFilters.push('burger');
+  if(beefOn)    dishFilters.push('beef');
+  if(dishFilters.length > 0)
+    d = d.filter(r => dishFilters.some(d2 => r.dishes.includes(d2)));
+
+  // Sort
+  const sort = document.getElementById('sortSelect').value;
+  if(sort==='rating')  d.sort((a,b)=>b.rating-a.rating);
+  if(sort==='reviews') d.sort((a,b)=>b.reviews-a.reviews);
+
+  document.getElementById('resultCount').textContent = d.length.toLocaleString();
+
+  document.getElementById('restaurantList').innerHTML = d.length === 0
+    ? '<div style="text-align:center;padding:40px;color:var(--muted)">No restaurants match the selected filters.</div>'
+    : d.map((r, idx) => {
+        const full = Math.floor(r.rating);
+        const empty = 5 - full;
+        const bubbles = Array(full).fill(`<span class="bubble"></span>`).join('') +
+                        Array(empty).fill(`<span class="bubble empty"></span>`).join('');
+        const openClass = r.open.startsWith('Open now') ? 'open-now' : 'open-soon';
+        return `
+        <div class="rest-card" id="rest-${r.id}">
+          <div class="rest-img" style="background:linear-gradient(135deg,hsl(${r.id*37},60%,45%),hsl(${r.id*37+40},60%,30%))">${r.emoji}</div>
+          <div class="rest-body">
+            <div class="rest-info">
+              ${r.sponsored ? '<span class="sponsored-badge">Sponsored</span>' : ''}
+              <div class="rest-rank">${idx+1}.</div>
+              <div class="rest-name">${r.name}</div>
+              <div class="rating-row">
+                ${bubbles}
+                <span class="rating-text">${r.rating}</span>
+                <span class="review-count">(${r.reviews.toLocaleString()} reviews)</span>
+              </div>
+              <div class="rest-meta">
+                🍴 ${r.cuisine.map(c=>c.charAt(0).toUpperCase()+c.slice(1)).join(', ')}
+                <span class="dot"></span>
+                ${r.price}
+                <span class="dot"></span>
+                <span class="${openClass}">⏱ ${r.open}</span>
+              </div>
+              <div>
+                ${r.cuisine.map(c=>`<span class="cuisine-tag">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+}
+
+renderRestaurants();
+</script>
+</body>
+</html>
